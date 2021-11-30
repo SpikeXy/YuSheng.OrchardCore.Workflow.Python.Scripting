@@ -5,13 +5,35 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Title>OrchardCore Forms</Title>
     <Description>
-      Provides widgets and workflow activities to implement forms.
+      Provides python scripting in workflow.
     </Description>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>0.0.1</Version>
+    <Authors>spike</Authors>
+    <Company>spike</Company>
+    <Copyright>spike @ 2022</Copyright>
+    <PackageProjectUrl>https://github.com/SpikeXy/YuSheng.OrchardCore.Workflow.Python.Scripting</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>horse-face-front-view-sketch.png</PackageIcon>
+    <RepositoryUrl>https://github.com/SpikeXy/YuSheng.OrchardCore.Workflow.Python.Scripting</RepositoryUrl>
+    <PackageTags>orchardcore,python,workflow</PackageTags>
   </PropertyGroup>
 
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="..\horse-face-front-view-sketch.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
   
   <ItemGroup>
