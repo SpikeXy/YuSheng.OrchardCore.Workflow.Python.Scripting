@@ -1,0 +1,48 @@
+@using YuSheng.OrchardCore.Workflow.Python.Scripting.ViewModels;
+@model ScriptTaskViewModel
+
+
+<div class="form-group" asp-validation-class-for="PythonDllFilePath">
+    <label asp-for="PythonDllFilePath">@T["Please input python path"]</label>
+    <input asp-for="PythonDllFilePath" class="form-control" />
+    <span asp-validation-for="PythonDllFilePath"></span>
+    <span class="hint">@T["Input python exec path manually"]</span>
+</div>
+
+<div class="form-group" asp-validation-class-for="TempPythonFileName">
+    <label asp-for="TempPythonFileName">@T["Temp python render html file name"]</label>
+    <input asp-for="TempPythonFileName" class="form-control" />
+    <span asp-validation-for="TempPythonFileName"></span>
+    <span class="hint">@T["A comma-separated list of available outcomes."]</span>
+</div>
+
+<div class="form-group" asp-validation-class-for="Script">
+    <label asp-for="Script">@T["Script"]</label>
+    <textarea asp-for="Script" class="form-control" placeholder="e.g. js: setOutcome('Done');"></textarea>
+    <span asp-validation-for="Script"></span>
+    <span class="hint">@T["The script to execute. Make sure to call `setOutcome` with any of the specified available outcomes at least once."]</span>
+</div>
+
+<style asp-name="codemirror"></style>
+<script asp-name="codemirror" depends-on="admin" at="Foot"></script>
+<script asp-name="codemirror-mode-javascript" at="Foot"></script>
+<script asp-name="codemirror-addon-display-autorefresh" at="Foot"></script>
+<script asp-name="codemirror-addon-mode-simple" at="Foot"></script>
+<script asp-name="codemirror-addon-mode-multiplex" at="Foot"></script>
+<script asp-name="codemirror-mode-xml" at="Foot"></script>
+
+<script at="Foot">
+    $(function () {
+        var editor = CodeMirror.fromTextArea(document.getElementById('@Html.IdFor(x => x.Script)'), {
+            autoRefresh: true,
+            lineNumbers: true,
+            styleActiveLine: true,
+            matchBrackets: true,
+            mode: { name: "javascript" },
+        });
+
+        editor.on('change', function(cmEditor){
+            cmEditor.save();
+        });
+    });
+</script>
