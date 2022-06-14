@@ -1,15 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Localization;
 using OrchardCore.Workflows.Abstractions.Models;
 using OrchardCore.Workflows.Activities;
 using OrchardCore.Workflows.Models;
 using OrchardCore.Workflows.Services;
 using Python.Runtime;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
+
 
 namespace YuSheng.OrchardCore.Workflow.Python.Scripting.Activities
 {
@@ -17,14 +18,17 @@ namespace YuSheng.OrchardCore.Workflow.Python.Scripting.Activities
     {
         private readonly IWorkflowScriptEvaluator _scriptEvaluator;
         private readonly IStringLocalizer S;
+        private readonly IHtmlHelper _htmlHelper;
         private readonly IWorkflowExpressionEvaluator _expressionEvaluator;
         public PythonScriptTask(IWorkflowScriptEvaluator scriptEvaluator,
             IWorkflowExpressionEvaluator expressionEvaluator,
+            IHtmlHelper htmlHelper,
             IStringLocalizer<PythonScriptTask> localizer)
         {
             _scriptEvaluator = scriptEvaluator;
             _expressionEvaluator = expressionEvaluator;
             S = localizer;
+            _htmlHelper = htmlHelper;
 
         }
 
@@ -39,13 +43,6 @@ namespace YuSheng.OrchardCore.Workflow.Python.Scripting.Activities
             get => GetProperty(() => new WorkflowExpression<string>());
             set => SetProperty(value);
         }
-
-        public WorkflowExpression<string> TempPythonFileName
-        {
-            get => GetProperty(() => new WorkflowExpression<string>());
-            set => SetProperty(value);
-        }
-
 
         /// <summary>
         /// The script can call any available functions, including setOutcome().
@@ -63,44 +60,42 @@ namespace YuSheng.OrchardCore.Workflow.Python.Scripting.Activities
 
         public override async Task<ActivityExecutionResult> ExecuteAsync(WorkflowExecutionContext workflowContext, ActivityContext activityContext)
         {
-            var tempPythonFileName = await _expressionEvaluator.EvaluateAsync(TempPythonFileName, workflowContext, null);
+
+            var tempPythonFileName = Guid.NewGuid().ToString();
             var pythonDllFilePath = await _expressionEvaluator.EvaluateAsync(PythonDllFilePath, workflowContext, null);
 
-            if ( !string.IsNullOrEmpty(pythonDllFilePath) && !string.IsNullOrEmpty(tempPythonFileName))
-			{
+            if (!string.IsNullOrEmpty(pythonDllFilePath))
+            {
                 string code = "";
                 try
-				{
-                    var pythonTask = Task.Run(() =>
+                {
+                    Environment.SetEnvironmentVariable("PYTHONNET_PYDLL", pythonDllFilePath);
+                    PythonEngine.Initialize();
+                    using (Py.GIL())
                     {
-
-                        Environment.SetEnvironmentVariable("PYTHONNET_PYDLL", pythonDllFilePath);
-
-                        using (Py.GIL())
+                        // create a Python scope
+                        using (var scope = Py.CreateScope())
                         {
-                            // create a Python scope
-                            using (var scope = Py.CreateScope())
+                            scope.Set("pythonfile", tempPythonFileName);
+                            scope.Exec(Script.Expression);
+                            using (var streamReader = new StreamReader(tempPythonFileName, Encoding.UTF8))
                             {
-                                scope.Exec(Script.Expression);
-                                using (var streamReader = new StreamReader(tempPythonFileName, Encoding.UTF8))
-                                {
-                                    code = streamReader.ReadToEnd();
-                                }
+                                code = streamReader.ReadToEnd();
                             }
-                            File.Delete(tempPythonFileName);
                         }
-                    });
-                    TimeSpan ts = TimeSpan.FromMinutes(5);
-                    if (!pythonTask.Wait(ts))
-                        code = "The task timeout .";
+                        File.Delete(tempPythonFileName);
+                    }
+                    PythonEngine.Shutdown();
                 }
-				catch (System.Exception ex)
-				{
+                catch (Exception ex)
+                {
                     code = ex.Message;
-				}
-                workflowContext.Output.Add("PythonScript", code);            
+                }
+                //workflowContext.Output["PythonScript"] = code ;
+
+                workflowContext.Output["PythonScript"] = _htmlHelper.Raw(_htmlHelper.Encode(code)) ;
             }
-            
+
             return Outcomes("Done");
         }
     }
