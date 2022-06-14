@@ -3,12 +3,12 @@
   <PropertyGroup>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <TargetFramework>net6.0</TargetFramework>
-    <Title>OrchardCore Forms</Title>
+    <Title>YuSheng.OrchardCore.Workflow.Python.Scripting</Title>
     <Description>
       Provides python scripting in workflow.
     </Description>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>0.0.2</Version>
+    <Version>0.0.3</Version>
     <Authors>spike</Authors>
     <Company>spike</Company>
     <Copyright>spike @ 2022</Copyright>

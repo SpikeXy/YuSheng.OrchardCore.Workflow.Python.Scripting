@@ -91,7 +91,6 @@ namespace YuSheng.OrchardCore.Workflow.Python.Scripting.Activities
                 {
                     code = ex.Message;
                 }
-                //workflowContext.Output["PythonScript"] = code ;
 
                 workflowContext.Output["PythonScript"] = _htmlHelper.Raw(_htmlHelper.Encode(code)) ;
             }
