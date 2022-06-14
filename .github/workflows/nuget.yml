@@ -2,30 +2,32 @@ name: .NET
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 3.1.x
-      - name: Restore dependencies
-        run: dotnet restore
-      - name: Build
-        run: dotnet build --no-restore
-      - name: Test
-        run: dotnet test --no-build --verbosity normal
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
-
-      - name: Deploy nuget packages
-        run: |
-          dotnet nuget add source --username USERNAME --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/spikexy/index.json" 
-          dotnet nuget push "./YuSheng.OrchardCore.Workflow.Python.Scripting/bin/Release/*.nupkg"  --api-key ${{secrets.nuget}} --source "github"
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    - name: Build with dotnet
+      run: dotnet build --configuration Release
+      
+    - name: Deploy nuget packages
+      run: 
+        dotnet nuget push './YuSheng.OrchardCore.Workflow.Python.Scripting/bin/Release/*.nupkg' -k ${{secrets.YUSHENG_ORCHARDCORE}} -n true -s https://api.nuget.org/v3/index.json --skip-duplicate 
+      
+      
