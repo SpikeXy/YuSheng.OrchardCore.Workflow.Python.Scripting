@@ -36,7 +36,7 @@ namespace YuSheng.OrchardCore.Workflow.Python.Scripting.Activities
 
         public override LocalizedString DisplayText => S["Python Script Task"];
 
-        public override LocalizedString Category => S["Control Flow"];
+        public override LocalizedString Category => S["Script"];
 
         public WorkflowExpression<string> PythonDllFilePath
         {
