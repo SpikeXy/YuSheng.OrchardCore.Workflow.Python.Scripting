@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Title>YuSheng.OrchardCore.Workflow.Python.Scripting</Title>
     <Description>
       Provides python scripting in workflow.
     </Description>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>0.0.4</Version>
+    <Version>0.0.5</Version>
     <Authors>spike</Authors>
     <Company>spike</Company>
-    <Copyright>spike @ 2022</Copyright>
+    <Copyright>spike @ 2024</Copyright>
     <PackageProjectUrl>https://github.com/SpikeXy/YuSheng.OrchardCore.Workflow.Python.Scripting</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageIcon>horse-face-front-view-sketch.png</PackageIcon>
@@ -37,17 +37,17 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="OrchardCore.ContentManagement.Abstractions" Version="1.4.0" />
-    <PackageReference Include="OrchardCore.ContentManagement.Display" Version="1.4.0" />
-    <PackageReference Include="OrchardCore.DisplayManagement" Version="1.4.0" />
-    <PackageReference Include="OrchardCore.DisplayManagement.Abstractions" Version="1.4.0" />
-    <PackageReference Include="OrchardCore.DisplayManagement.Liquid" Version="1.1.0" />
-    <PackageReference Include="OrchardCore.Liquid.Abstractions" Version="1.4.0" />
-    <PackageReference Include="OrchardCore.Module.Targets" Version="1.4.0" />
-    <PackageReference Include="OrchardCore.ResourceManagement" Version="1.4.0" />
-    <PackageReference Include="OrchardCore.ResourceManagement.Abstractions" Version="1.4.0" />
-    <PackageReference Include="OrchardCore.Workflows.Abstractions" Version="1.1.0" />
-    <PackageReference Include="pythonnet" Version="3.0.0-preview2021-10-05" />
+    <PackageReference Include="OrchardCore.ContentManagement.Abstractions" Version="1.8.3" />
+    <PackageReference Include="OrchardCore.ContentManagement.Display" Version="1.8.3" />
+    <PackageReference Include="OrchardCore.DisplayManagement" Version="1.8.3" />
+    <PackageReference Include="OrchardCore.DisplayManagement.Abstractions" Version="1.8.3" />
+    <PackageReference Include="OrchardCore.DisplayManagement.Liquid" Version="1.8.3" />
+    <PackageReference Include="OrchardCore.Liquid.Abstractions" Version="1.8.3" />
+    <PackageReference Include="OrchardCore.Module.Targets" Version="1.8.3" />
+    <PackageReference Include="OrchardCore.ResourceManagement" Version="1.8.3" />
+    <PackageReference Include="OrchardCore.ResourceManagement.Abstractions" Version="1.8.3" />
+    <PackageReference Include="OrchardCore.Workflows.Abstractions" Version="1.8.3" />
+    <PackageReference Include="pythonnet" Version="3.1.0-preview2024-07-03" />
   </ItemGroup>
 
 </Project>
