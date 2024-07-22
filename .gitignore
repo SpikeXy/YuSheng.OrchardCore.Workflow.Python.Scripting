@@ -6,6 +6,8 @@
 *.user
 *.sln.docstates
 
+App_Data/
+
 # Build results
 src/.vscode/
 .vs/

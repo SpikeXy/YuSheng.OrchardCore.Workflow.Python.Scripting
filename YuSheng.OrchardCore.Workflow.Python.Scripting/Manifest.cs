@@ -1,10 +1,10 @@
 using OrchardCore.Modules.Manifest;
 
 [assembly: Module(
-    Name = "YuSheng OrchardCore Workflow Python Scripting",
+    Name = "YuSheng.OrchardCore.Workflow.Python.Scripting",
     Author = "spike",
     Website = "",
-    Version = "0.0.1"
+    Version = "0.0.6"
 )]
 
 [assembly: Feature(
